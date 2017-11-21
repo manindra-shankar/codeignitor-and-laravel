@@ -55,44 +55,43 @@ class SubscriptionController extends BaseController {
          * @return: JSON
          * @createdBy: Manindra SDEI
          */
-        public function sendSubscriptionMail($ff_data = null, $plan_data = null, $user_email = null){
+        public function sendSubscriptionMail($XXXXX_data = null, $plan_data = null, $user_email = null){
             //return true;
-                if(empty($ff_data) || empty($plan_data) || empty($user_email)){
+                if(empty($XXXXX_data) || empty($plan_data) || empty($user_email)){
                         $response_arr['msg'] = "Email Receiver Details Not Found";
                         $response_arr['status'] = "0";
                         echo json_encode($response_arr); exit;
                 }
 
-                $email_template = $this->email_template_content(5);
-                $email_template_detls = $this->email_template_details(5);
-                //$email_template = $this->get_email_template('freight_forwarder_registration');
+                $email_template = $this->get_email_template_content(5);
+                $email_template_detls = $this->get_email_template_details(5);
 
                 $body = str_replace(
-                                /*THIS*/array("[company_name]", "[plan_name]",'[ff_domain]',"[plan_price]"),
-                                /*WITH THIS*/array($ff_data["company_name"], $plan_data["subscription_name"], $ff_data["account_url"], $plan_data["price"]),
+                                /*THIS*/array("[company_name]", "[plan_name]",'[XXXXX_domain]',"[plan_price]"),
+                                /*WITH THIS*/array($ff_data["company_name"], $plan_data["subscription_name"], $ff_data["url"], $plan_data["price"]),
                                 /*IN THIS*/$email_template
                         );
-                //$admin_users_email = $this->get_site_email(); // info@freightalia.com
-                $frs_default_from = $this->get_default_frs_sendout_email();
-                $frs_default_name = $this->get_default_frs_name();
+                
+                $XXXXX_default_from = $this->get_default_XXXXX_sendout_email();
+                $XXXXX_default_name = $this->get_default_XXXXX_name();
 
-                $user_name = 'Company123';
+                $user_name = 'XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX';
 
                 $email_subject = $email_template_detls['subject'];
                 $email_signature = $email_template_detls['email_signature'];
                 $email_active = $email_template_detls['email_active'];
                 if($email_active == '1'){
 
-                    $company_name = $ff_data["company_name"];
+                    $company_name = $XXXXX_data["company_name"];
 
                         if(Mail::send(
                                 //TEMPLATE VIEW FILE
-                                ['html' => 'emails.ff_subscription'],
+                                ['html' => 'emails.XXXXX_subscription'],
                                 //VIEW FILE VARS
                                 array('message_body' => $body,'email_signature' => $email_signature),
                                 //EMAIL OBJECT {$message}
-                                function($message) use ($frs_default_from, $frs_default_name, $user_email,$user_name, $email_subject){
-                                        $message->from($frs_default_from, $frs_default_name);
+                                function($message) use ($XXXXX_default_from, $XXXXX_default_name, $user_email,$user_name, $email_subject){
+                                        $message->from($XXXXX_default_from, $XXXXX_default_name);
                                         $message->to($user_email)->subject($email_subject);
                                 }
                         )){
